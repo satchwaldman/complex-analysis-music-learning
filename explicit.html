@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explicit Formula — Zeta &amp; Temperament</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="top">
+  <span class="brand"><span class="zsym">&zeta;</span> Zeta &amp; Temperament</span>
+  <a class="navlink" href="index.html">Home</a>
+  <a class="navlink" href="explorer.html">Explorer</a>
+  <a class="navlink active" href="explicit.html">Explicit Formula</a>
+  <a class="navlink" href="reference.html">Reference</a>
+</nav>
+
+<div class="wrap">
+  <h1 style="margin-bottom:4px">The explicit formula — primes out of zeros</h1>
+  <p class="muted" style="margin-top:0">
+    The same Fourier duality that powers the tuning story, shown directly:
+    the heights <span class="mono">&gamma;</span> of the zeta zeros are the <em>frequencies</em>
+    whose waves add up to the prime-counting staircase.
+  </p>
+
+  <div class="callout">
+    <p style="margin:0" class="mono" style="font-size:15px">
+      &psi;<sub>0</sub>(x) = x − &Sigma;<sub>&rho;</sub> x<sup>&rho;</sup>/&rho; − ln(2&pi;) − &frac12; ln(1 − x<sup>−2</sup>)
+    </p>
+    <p class="small muted" style="margin-bottom:0">Each nontrivial zero &rho; = &frac12; + i&gamma;, paired with its
+      conjugate, contributes a real wave &nbsp;−2·x<sup>½</sup>·cos(&gamma; ln x + &phi;)/|&rho;| — an
+      oscillation of frequency &gamma; in the variable u = ln x. Add them one at a time below.</p>
+  </div>
+
+  <!-- ===== PANE A: staircase assembly ===== -->
+  <div class="pane" style="margin:18px 0">
+    <h2><span class="dot" style="background:var(--accent4)"></span> Building &psi;(x) from zeros</h2>
+    <div class="controls" style="margin-bottom:14px">
+      <div class="control">
+        <label>Zeros included — <span class="val" id="nzVal">0</span> of 100</label>
+        <input type="range" id="nzSlider" min="0" max="100" step="1" value="0">
+      </div>
+      <div class="control">
+        <label>&nbsp;</label>
+        <button id="animBtn">▶ Animate</button>
+      </div>
+    </div>
+    <div class="canvas-wrap"><canvas id="psiCanvas" height="330"></canvas></div>
+    <div class="legend">
+      <div class="item"><span class="swatch" style="background:#8a94a6"></span> true &psi;(x) staircase (jumps ln p at prime powers)</div>
+      <div class="item"><span class="swatch" style="background:var(--accent4)"></span> explicit formula with current zeros</div>
+      <div class="item"><span class="swatch" style="background:#3d4a5a"></span> main term x − ln2&pi;</div>
+    </div>
+    <p class="small faint" style="margin-top:10px">With zero zeros the approximation is just the smooth main
+      term. Each zero you add is one more cosine wave; together they carve the smooth line into the staircase,
+      with a jump sitting at every prime and prime power. This is Mazur–Stein's &ldquo;Riemann spectrum&rdquo; in action.</p>
+  </div>
+
+  <!-- ===== PANE B: the counter-demo ===== -->
+  <div class="pane">
+    <h2><span class="dot" style="background:var(--danger)"></span> Why you can't just &ldquo;sum the arrows&rdquo; on the line</h2>
+    <p class="small muted" style="margin-top:0">
+      The intuitive picture says |&zeta;(&sigma;+it)| = |&Sigma; n<sup>−&sigma;−it</sup>| — add arrows of length
+      n<sup>−&sigma;</sup>. That's true for &sigma; &gt; 1. On the critical line &sigma; = &frac12; the series
+      <em>diverges</em>: watch the running magnitude below refuse to settle.
+    </p>
+    <div class="controls" style="margin-bottom:14px">
+      <div class="control">
+        <label>height t</label>
+        <input type="number" id="tInput" value="108.78" step="1" style="width:110px; background:var(--bg-elev2); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:7px 10px; font-family:var(--mono)">
+      </div>
+      <div class="control">
+        <label>&sigma;</label>
+        <div class="seg" id="sigmaSeg2">
+          <button data-s="0.5" class="on">&frac12;</button>
+          <button data-s="1">1</button>
+        </div>
+      </div>
+      <div class="control">
+        <label>terms M — <span class="val" id="mVal">2000</span></label>
+        <input type="range" id="mSlider" min="50" max="4000" step="50" value="2000">
+      </div>
+    </div>
+    <div class="canvas-wrap"><canvas id="naiveCanvas" height="240"></canvas></div>
+    <div class="legend">
+      <div class="item"><span class="swatch" style="background:var(--accent)"></span> |partial sum of &Sigma; n<sup>−&sigma;−it</sup>|</div>
+      <div class="item"><span class="swatch" style="background:var(--accent2)"></span> true |&zeta;(&sigma;+it)|</div>
+      <div class="item"><span class="swatch" style="background:var(--accent3)"></span> Riemann–Siegel cutoff n = &radic;(t/2&pi;)</div>
+    </div>
+    <div class="readout">
+      <div class="stat"><div class="k">true |&zeta;(&sigma;+it)|</div><div class="v" id="nv-true">—</div></div>
+      <div class="stat"><div class="k">|partial sum| at M</div><div class="v" id="nv-partial">—</div></div>
+      <div class="stat"><div class="k">RS cutoff n</div><div class="v" id="nv-cut">—</div></div>
+    </div>
+    <div class="callout danger" style="margin-top:16px">
+      <p style="margin:0"><strong>Read the two cases.</strong> At <span class="mono">&sigma;=1</span> the blue partial
+      sum homes in on the green line — the arrows converge. At <span class="mono">&sigma;=½</span> it wanders and
+      never locks on; the value of &zeta; there exists only by <em>analytic continuation</em>, and the honest finite
+      object is the Riemann–Siegel main sum truncated at the amber line — <em>not</em> the full series.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:22px">
+    <p style="margin:0">This is the caveat that keeps the tuning story honest. The Explorer's zeta pane plots
+      the <em>continued</em> function |Z(t)|; its peaks are real and land on the good EDOs. But the &ldquo;each
+      integer n is an arrow&rdquo; intuition is only literally valid off the line. Carry both: the picture for
+      feel, the Riemann–Siegel truncation for truth.</p>
+  </div>
+</div>
+
+<footer class="site">First 100 nontrivial zeros (Odlyzko/LMFDB). &psi;(x) computed by direct sieve.</footer>
+
+<script src="js/mathlib.js"></script>
+<script src="js/zeros.js"></script>
+<script src="js/explicit.js"></script>
+</body>
+</html>

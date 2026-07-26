@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zeta &amp; Temperament — an interactive explorer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="top">
+  <span class="brand"><span class="zsym">&zeta;</span> Zeta &amp; Temperament</span>
+  <a class="navlink active" href="index.html">Home</a>
+  <a class="navlink" href="explorer.html">Explorer</a>
+  <a class="navlink" href="explicit.html">Explicit Formula</a>
+  <a class="navlink" href="reference.html">Reference</a>
+  <span class="spacer"></span>
+  <a class="navlink" href="https://en.xen.wiki/w/The_Riemann_zeta_function_and_tuning" target="_blank" rel="noopener">Xen Wiki ↗</a>
+</nav>
+
+<header class="hero">
+  <h1>Where the Riemann zeta function meets musical tuning</h1>
+  <p class="sub">An interactive companion for learning the &zeta;–temperament correspondence
+    from a signal-processing point of view — building intuition first, then flagging
+    exactly where that intuition breaks.</p>
+  <p class="eqn">peaks of |Z(t)| near&nbsp; t = 2&pi;N / ln 2 &nbsp;⟷&nbsp; the strong N-tone equal temperaments</p>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="grid cols-3">
+      <a class="card" href="explorer.html">
+        <span class="tag zeta">Zeta</span><span class="tag rtt">RTT</span><span class="tag audio">Audio</span>
+        <h3>The three-pane Explorer →</h3>
+        <p>Drag along the critical line and watch |Z(t)| peak exactly at the good EDOs.
+           See <em>which</em> harmonics each peak approximates, then <em>hear</em> the tuning.
+           A &sigma;-slider ties the number theory to what you perceive.</p>
+      </a>
+      <a class="card" href="explicit.html">
+        <span class="tag ef">Explicit Formula</span>
+        <h3>Primes from zeros →</h3>
+        <p>Add zeta zeros one at a time and watch the prime-counting staircase &psi;(x)
+           assemble itself out of waves. Includes the toggle that <em>breaks</em> the
+           naive &ldquo;sum of arrows&rdquo; picture on the critical line.</p>
+      </a>
+      <a class="card" href="reference.html">
+        <span class="tag zeta">Reference</span>
+        <h3>Fact base &amp; learning path →</h3>
+        <p>The verified number-theory record (RH verification height, % on the line,
+           Skewes, Mertens), the minimum-viable complex-analysis syllabus, and a
+           staged reading plan.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="narrow">
+    <h2>The one-paragraph story</h2>
+    <p class="muted">
+      For real part &sigma; &gt; 1, the identity |&zeta;(&sigma;+it)|&sup2; is literally a
+      Tenney-weighted sum of cosines measuring how well the &ldquo;tuning&rdquo; selected by
+      <span class="mono">t</span> approximates every rational interval. Setting
+      <span class="mono">t = 2&pi;N/ln&nbsp;2</span> makes that tuning the N-tone equal
+      temperament. Continued to the critical line &sigma; = &frac12;, the peaks of the
+      Riemann–Siegel <span class="mono">Z(t)</span> land right on the historically favored
+      EDOs — 12, 19, 31, 41, 53. That last step is <strong>analytic continuation, not a
+      theorem about tuning</strong>, and telling the two apart is the whole point of this site.
+    </p>
+  </section>
+
+  <section>
+    <h2>What is actually known — and what isn't</h2>
+    <div class="grid cols-3">
+      <div class="card">
+        <h3 style="color:var(--accent2)">Rigorous</h3>
+        <p>For &sigma; &gt; 1, |&zeta;|&sup2; <em>is</em> a weighted error metric over rationals —
+           an algebraic identity. Regular temperament theory (vals, monzos, TE norms) is
+           solid linear algebra over free abelian groups.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--accent3)">Heuristic</h3>
+        <p>Extending the tuning interpretation to &sigma; = &frac12; assumes the property
+           survives analytic continuation. The wiki itself calls this an open question —
+           &ldquo;empirically it seems to.&rdquo;</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--accent)">Numerical</h3>
+        <p>The match between |Z| peaks and the good EDOs is an excellent empirical fit,
+           verified by direct computation — but there is no theorem
+           <span class="mono">N good ⟺ |Z| peaks near 2&pi;N/ln2</span>.</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <p><strong>The first peer-reviewed treatment</strong> is Alexandre Guillet,
+        <em>&ldquo;Elementary spectrum for the dissonance curve: from biophysics to number
+        theory of musical harmony,&rdquo;</em> <em>Journal of Mathematics and Music</em> (2026),
+        DOI&nbsp;10.1080/17459737.2026.2628778. Before it, the correspondence lived entirely
+        on mailing lists and the Xenharmonic Wiki. Two questions it leaves open drive the
+        <a href="reference.html#open">research angle</a>: <em>why the 1/&radic;n weighting?</em>
+        and <em>is composite &ldquo;double-counting&rdquo; a bug or a timbre model?</em></p>
+    </div>
+  </section>
+
+  <section class="narrow">
+    <h2>Read this in the right order</h2>
+    <ul class="tight muted">
+      <li><strong>Start with the <a href="explorer.html">Explorer</a>.</strong> Get the peaks-are-EDOs
+        fact in your hands, hear it, and meet the &sigma;-slider.</li>
+      <li><strong>Then the <a href="explicit.html">Explicit-Formula</a> module</strong> for the
+        Fourier duality primes ⟷ zeros — and the demo that shows why you <em>cannot</em>
+        literally sum <span class="mono">&Sigma; n<sup>−½−it</sup></span> on the line.</li>
+      <li><strong>Keep the <a href="reference.html">Reference</a> open</strong> for the corrected
+        facts and the Mazur–Stein → Stein–Shakarchi → Edwards reading path.</li>
+    </ul>
+    <p class="small faint">Everything is computed live in your browser — zeta by Euler–Maclaurin,
+      the Riemann–Siegel <span class="mono">Z</span>, temperament errors, and Web-Audio synthesis.
+      No servers, no libraries.</p>
+  </section>
+
+</div>
+
+<footer class="site">
+  Built as a learning tool for the &zeta;–temperament correspondence.
+  Numerics: Euler–Maclaurin &zeta;, Riemann–Siegel <span class="mono">Z</span>, Sethares dissonance, Web Audio API.
+</footer>
+</body>
+</html>

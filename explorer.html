@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explorer — Zeta &amp; Temperament</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="top">
+  <span class="brand"><span class="zsym">&zeta;</span> Zeta &amp; Temperament</span>
+  <a class="navlink" href="index.html">Home</a>
+  <a class="navlink active" href="explorer.html">Explorer</a>
+  <a class="navlink" href="explicit.html">Explicit Formula</a>
+  <a class="navlink" href="reference.html">Reference</a>
+</nav>
+
+<div class="wrap">
+  <h1 style="margin-bottom:4px">The three-pane Explorer</h1>
+  <p class="muted" style="margin-top:0">
+    One selected EDO, three linked views: <b style="color:var(--accent)">zeta</b> (why it's a peak),
+    <b style="color:var(--accent2)">temperament</b> (which harmonics it nails), and
+    <b style="color:var(--accent3)">audio</b> (what it sounds like).
+  </p>
+
+  <!-- ===== GLOBAL CONTROLS ===== -->
+  <div class="pane" style="margin:18px 0">
+    <div class="controls">
+      <div class="control">
+        <label>Selected EDO — <span class="val" id="edoVal">12</span></label>
+        <input type="range" id="edoSlider" min="5" max="72" step="1" value="12">
+      </div>
+      <div class="control">
+        <label>Weighting exponent &sigma;</label>
+        <div class="seg" id="sigmaSeg">
+          <button data-s="0.5" class="on">&frac12; (critical line)</button>
+          <button data-s="0.75">&frac34;</button>
+          <button data-s="1">1 (converges)</button>
+        </div>
+      </div>
+      <div class="control">
+        <label>Prime limit</label>
+        <select id="primeLimit">
+          <option value="5">5-limit (2·3·5)</option>
+          <option value="7" selected>7-limit (2·3·5·7)</option>
+          <option value="13">13-limit</option>
+        </select>
+      </div>
+      <div class="control">
+        <label>&nbsp;</label>
+        <button id="snapBtn">↧ Snap to nearest peak</button>
+      </div>
+    </div>
+    <p class="small faint" style="margin:12px 0 0">
+      Click or drag anywhere on the zeta plot to move the cursor. The nearest integer EDO
+      drives the temperament and audio panes.
+    </p>
+  </div>
+
+  <!-- ===== ZETA PANE ===== -->
+  <div class="pane" style="margin-bottom:18px">
+    <h2><span class="dot" style="background:var(--accent)"></span> Zeta pane — |Z(t)| along the critical line, x-axis relabeled as EDO number</h2>
+    <div class="canvas-wrap">
+      <canvas id="zetaCanvas" height="300"></canvas>
+    </div>
+    <div class="legend">
+      <div class="item"><span class="swatch" style="background:var(--accent)"></span> |Z(t)| = |&zeta;(&frac12;+it)|</div>
+      <div class="item"><span class="swatch" style="background:#3d4a5a"></span> integer EDO gridlines</div>
+      <div class="item"><span class="swatch" style="background:var(--accent3)"></span> cursor / selected EDO</div>
+      <div class="item"><span class="faint">peaks ≈ strong equal temperaments</span></div>
+    </div>
+    <div class="readout">
+      <div class="stat"><div class="k">height t</div><div class="v" id="stat-t">108.78</div></div>
+      <div class="stat"><div class="k">|Z| here</div><div class="v" id="stat-z">—</div></div>
+      <div class="stat"><div class="k">nearest peak (N<sub>eff</sub>)</div><div class="v" id="stat-neff">—</div></div>
+      <div class="stat"><div class="k">optimal octave</div><div class="v" id="stat-oct">—<small> ¢</small></div></div>
+    </div>
+    <div class="callout warn" style="margin-top:16px">
+      <p style="margin:0"><strong>The honest &ldquo;sum of arrows.&rdquo;</strong> On the critical line the
+      infinite series &Sigma; n<sup>−½−it</sup> <em>diverges</em> — you can't literally add the arrows.
+      What actually works is the <em>finite</em> Riemann–Siegel main sum, cut off at
+      n ≤ &radic;(t/2&pi;). Below you can watch those finitely many arrows line up at a peak.</p>
+    </div>
+    <div style="margin-top:14px; display:flex; gap:22px; flex-wrap:wrap; align-items:flex-start">
+      <div>
+        <canvas id="arrowCanvas" width="260" height="260" style="width:260px; max-width:100%"></canvas>
+      </div>
+      <div style="flex:1; min-width:240px">
+        <p class="small muted" id="arrowText">The Riemann–Siegel main sum builds
+          <span class="mono" id="arrowN">—</span> arrows at this height. When they point the same
+          way, |Z| spikes and that EDO is &ldquo;good.&rdquo;</p>
+        <div class="readout">
+          <div class="stat"><div class="k">terms (n ≤ &radic;(t/2&pi;))</div><div class="v" id="arrow-terms">—</div></div>
+          <div class="stat"><div class="k">resultant |Z|</div><div class="v" id="arrow-res">—</div></div>
+        </div>
+        <p class="small faint" style="margin-top:10px">The gray spiral is the running partial sum;
+          the amber arrow is the final resultant (× &frac12; for scale). Compare a peak EDO (e.g. 12, 31, 53)
+          against a poor one (e.g. 13, 23).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RTT + AUDIO ROW ===== -->
+  <div class="grid cols-2">
+
+    <!-- RTT PANE -->
+    <div class="pane">
+      <h2><span class="dot" style="background:var(--accent2)"></span> Temperament pane — what <span id="rtt-N" class="mono">12</span>-EDO approximates</h2>
+      <p class="small muted" style="margin-top:0">Patent val
+        <span class="mono" id="rtt-val">⟨…⟩</span> — the best integer step-count for each prime.
+        Bars show tuning error (← flat · sharp →), scaled ±50¢.</p>
+      <table class="data" id="rttTable">
+        <thead><tr><th>prime</th><th>steps</th><th>error ¢</th><th class="bar-cell">deviation</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="readout">
+        <div class="stat"><div class="k">TE-weighted RMS</div><div class="v" id="rtt-te">—<small> ¢</small></div></div>
+        <div class="stat"><div class="k">relative badness</div><div class="v" id="rtt-bad">—</div></div>
+      </div>
+      <p class="small faint" style="margin-top:12px">A low TE-RMS is exactly what makes the |Z| peak
+        tall: the zeta metric <em>is</em> (a limit of) this weighted error, summed over all rationals.</p>
+    </div>
+
+    <!-- AUDIO PANE -->
+    <div class="pane">
+      <h2><span class="dot" style="background:var(--accent3)"></span> Audio pane — hear the approximation</h2>
+      <div class="controls" style="gap:14px 20px">
+        <div class="control">
+          <label>Chord</label>
+          <select id="chordSel">
+            <option value="4:5:6">Major triad — 4:5:6</option>
+            <option value="10:12:15">Minor triad — 10:12:15</option>
+            <option value="4:5:6:7">Harmonic 7th — 4:5:6:7</option>
+            <option value="8:9:10:11:12">Otonal 8:9:10:11:12</option>
+          </select>
+        </div>
+        <div class="control">
+          <label>Partials per note — <span class="val" id="partVal">6</span></label>
+          <input type="range" id="partSlider" min="1" max="10" step="1" value="6">
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px">
+        <button class="play" id="playJI">▶ Just intonation</button>
+        <button class="play" id="playEDO">▶ <span id="playEdoLbl">12</span>-EDO</button>
+        <button id="stopBtn">■ Stop</button>
+      </div>
+      <h3 style="font-size:14px; margin:20px 0 6px; color:var(--text-dim)">Sethares dissonance curve
+        <span class="faint">(this timbre)</span></h3>
+      <div class="canvas-wrap"><canvas id="dissCanvas" height="180"></canvas></div>
+      <div class="legend">
+        <div class="item"><span class="swatch" style="background:var(--accent2)"></span> JI chord ratios</div>
+        <div class="item"><span class="swatch" style="background:var(--accent3)"></span> N-EDO approximations</div>
+      </div>
+      <p class="small faint" style="margin-top:10px">Drag the <b>partials</b> slider: as you add upper
+        harmonics the curve grows more valleys — the timbral reason a metric summing over
+        <em>all</em> integers (not just primes) can track consonance. That's open question 1.4(b),
+        made audible.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:22px">
+    <p><strong>How the three panes lock together.</strong> The tall |Z| peaks (zeta pane) sit at exactly
+    the EDOs whose patent val has tiny weighted error (temperament pane), which are exactly the tunings
+    whose approximations fall into the valleys of the dissonance curve (audio pane). Change &sigma; and
+    watch the peak list shift; add partials and watch the valleys move. You are looking at one fact from
+    three sides.</p>
+  </div>
+</div>
+
+<footer class="site">All computation runs in your browser. See <a href="reference.html">Reference</a> for the caveats.</footer>
+
+<script src="js/mathlib.js"></script>
+<script src="js/explorer.js"></script>
+</body>
+</html>

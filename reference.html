@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference — Zeta &amp; Temperament</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="top">
+  <span class="brand"><span class="zsym">&zeta;</span> Zeta &amp; Temperament</span>
+  <a class="navlink" href="index.html">Home</a>
+  <a class="navlink" href="explorer.html">Explorer</a>
+  <a class="navlink" href="explicit.html">Explicit Formula</a>
+  <a class="navlink active" href="reference.html">Reference</a>
+</nav>
+
+<div class="wrap narrow">
+  <h1>Reference &amp; learning path</h1>
+  <p class="muted">The load-bearing facts, corrected against the primary sources, plus a staged
+    reading plan tuned for someone who thinks in transforms and filters.</p>
+
+  <!-- ===== verified facts ===== -->
+  <section>
+    <h2>Verified number-theory record</h2>
+    <table class="data">
+      <thead><tr><th>Claim</th><th style="text-align:left">Corrected statement &amp; source</th></tr></thead>
+      <tbody>
+        <tr><td style="white-space:nowrap">First three zeros</td>
+          <td style="text-align:left" class="small">&gamma; = 14.134725, 21.022040, 25.010858 — correct.</td></tr>
+        <tr><td>RH verified &ldquo;to 10<sup>13</sup>&rdquo;</td>
+          <td style="text-align:left" class="small"><b>Disambiguate.</b> Rigorous height record is
+            <span class="mono">3,000,175,332,800 ≈ 3×10<sup>12</sup></span>, containing ≈ 1.24×10<sup>13</sup>
+            zeros — all simple, all on the line (Platt &amp; Trudgian 2021, <i>Bull. LMS</i> 53(3), DOI 10.1112/blms.12460).
+            &ldquo;10<sup>13</sup>&rdquo; is a zero <em>count</em>, not a height.</td></tr>
+        <tr><td>% on critical line</td>
+          <td style="text-align:left" class="small">Conrey's 40.77% (1989) is superseded:
+            <b>≥ 41.7% ≈ 5/12</b> (Pratt–Robles–Zaharescu–Zeindler 2020). Levinson ≥ 1/3; Feng ≥ 41.28%.</td></tr>
+        <tr><td>Hardy 1914</td>
+          <td style="text-align:left" class="small">Infinitely many zeros exactly on the line — correct
+            (Z-function sign-change argument). Selberg: N<sub>0</sub>(T) ≫ T log T.</td></tr>
+        <tr><td>Mertens disproved</td>
+          <td style="text-align:left" class="small">Odlyzko &amp; te Riele 1985 (via LLL), <b>no explicit counterexample</b>.
+            Smallest counterexample known to lie <b>above ~10<sup>16</sup></b> (not 10<sup>30</sup>); upper bound
+            repeatedly lowered (Pintz; Kim–Nguyen 2024).</td></tr>
+        <tr><td>li(x) &gt; &pi;(x) crossing</td>
+          <td style="text-align:left" class="small">First sign change ≈ <b>1.397×10<sup>316</sup></b> (Bays–Hudson 2000).
+            Distinguish from Skewes's original <em>bound</em> e^(e^(e^79)). Crossing is &gt; 10<sup>14</sup>.</td></tr>
+        <tr><td>von Koch under RH</td>
+          <td style="text-align:left" class="small">RH ⟺ &pi;(x) = li(x) + O(&radic;x log x). Schoenfeld: under RH
+            |&pi;(x)−li(x)| &lt; (1/8&pi;)&radic;x log x for x ≥ 2657. Note <b>log for &pi;, log&sup2; for &psi;</b>.</td></tr>
+        <tr><td>12-EDO peak height</td>
+          <td style="text-align:left" class="small">t = 2&pi;·12/ln2 = <b>108.777</b> — correct. True |Z| max sits
+            just above N=12 (slight octave compression). Verify others live in the <a href="explorer.html">Explorer</a>.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== MVP complex analysis ===== -->
+  <section>
+    <h2>Minimum-viable complex analysis</h2>
+    <p class="muted">You do <em>not</em> need a full course to <em>understand</em> the explicit formula —
+      about a third of one. Full rigor needs the whole thing. In order:</p>
+    <ol class="muted tight">
+      <li>Holomorphic functions, Cauchy–Riemann, conformality <span class="faint">— what &ldquo;analytic&rdquo; buys you (the 3Blue1Brown framing)</span></li>
+      <li>Cauchy's integral theorem &amp; the residue theorem <span class="faint">— the workhorse; non-negotiable</span></li>
+      <li>Analytic continuation &amp; uniqueness <span class="faint">— why &zeta; extends past &sigma;&gt;1, and why uniquely</span></li>
+      <li>The argument principle <span class="faint">— counts zeros; underlies N(T)</span></li>
+      <li>Meromorphic functions, poles, logarithmic derivatives <span class="faint">— you need −&zeta;′/&zeta;</span></li>
+      <li>Hadamard product / factorization <span class="faint">— <b>the one genuinely heavier prerequisite</b>; the bridge zeros→primes</span></li>
+      <li>Functional equations <span class="faint">— the &xi;(s)=&xi;(1−s) symmetry</span></li>
+    </ol>
+    <div class="callout ok">
+      <p style="margin:0">For an EE who's done contour integration via inverse Laplace / Z-transforms, items 1–5
+        are a few weeks; item 6 is the real new investment.</p>
+    </div>
+  </section>
+
+  <!-- ===== derivation sketch ===== -->
+  <section>
+    <h2>From −&zeta;′/&zeta; to the zero waves (sketch)</h2>
+    <ul class="muted tight small">
+      <li><b>Why &psi; not &pi;:</b> with von Mangoldt &Lambda;(n) = log p on prime powers,
+        −&zeta;′(s)/&zeta;(s) = &Sigma; &Lambda;(n) n<sup>−s</sup> (log-derivative of the Euler product). Clean series, smooth main term &psi;(x)~x.</li>
+      <li><b>Perron + contour shift:</b> &psi;(x) = (1/2&pi;i)∫ (−&zeta;′/&zeta;)(s) x<sup>s</sup>/s ds; shifting left collects residues.</li>
+      <li><b>Residues:</b> pole at s=1 → <b>x</b> (main term); s=0 → <b>−ln2&pi;</b>; each nontrivial &rho; → <b>−x<sup>&rho;</sup>/&rho;</b>; trivial zeros → <b>−&frac12;ln(1−x<sup>−2</sup>)</b>.</li>
+      <li><b>The wave:</b> x<sup>&rho;</sup>/&rho; with &rho;=&frac12;+i&gamma; gives x<sup>½</sup>e<sup>i&gamma; ln x</sup>/&rho; — an oscillation of frequency &gamma; in u = ln x. That is the &ldquo;spectrum.&rdquo; See it assemble in the <a href="explicit.html">Explicit-Formula module</a>.</li>
+    </ul>
+  </section>
+
+  <!-- ===== the Fourier analogy: how far ===== -->
+  <section>
+    <h2>The DSP analogy — how far it goes, where it misleads</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3 style="color:var(--accent2)">Legitimate</h3>
+        <p>The explicit formula <em>is</em> a spectral decomposition; primes ⟷ zeros is a genuine Fourier duality
+          (rigorous as the Weil explicit formula, a trace formula). Resynthesis from the &ldquo;spectrum&rdquo; {&gamma;} is the right mental model.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--danger)">Misleading</h3>
+        <p>The Dirichlet series does <b>not</b> converge on the line — &zeta; there is defined only by continuation.
+          The zero-sum is <b>conditionally</b> convergent (pair &rho; with &rho;&#772;, truncate symmetrically).
+          Self-adjointness (Hilbert–Pólya) is <b>conjectural</b>, not a given.</p>
+      </div>
+    </div>
+    <p class="small faint">The <a href="explicit.html">counter-demo</a> makes the first misleading point concrete:
+      the naive partial sums at &sigma;=½ never settle.</p>
+  </section>
+
+  <!-- ===== open questions ===== -->
+  <section id="open">
+    <h2>The research angle — two genuinely open questions</h2>
+    <div class="callout warn">
+      <p><b>(a) Why the 1/&radic;n weighting?</b> &sigma;=½ forces harmonic n to be weighted n<sup>−½</sup>. This choice
+        is mathematical/aesthetic, not psychoacoustically derived — Buch: &ldquo;chosen just for convenience.&rdquo; No
+        refereed pre-2026 work validates it against Plomp–Levelt / Sethares roughness data. <b>Tractable, DSP-friendly:</b>
+        compare &sigma; ∈ {½, ¾, 1, …} against empirical consonance rankings. Try it with the Explorer's &sigma;-toggle.</p>
+    </div>
+    <div class="callout warn">
+      <p><b>(b) Composite &ldquo;double-counting&rdquo; — bug or timbre model?</b> &zeta; sums over <em>all</em> integers, so
+        composites (4, 6, 8, 9, …) are scored repeatedly, unlike prime-limit RTT. Is that arbitrary over-weighting, or
+        exactly right for real harmonic timbres whose partials <em>are</em> all integers? An interference model naturally
+        sums over all partial pairs — which could <em>justify</em> the composite counting. The audio pane's partials
+        slider is the apparatus for probing this.</p>
+    </div>
+    <p class="muted">Honest size estimate: a strong paper or a thesis chapter, not a full PhD, and not numerology.
+      The convergent-region identity is real math; RTT is rigorous; Guillet 2026 shows a refereed venue accepts the
+      material. Proving the correspondence rigorously <em>on the line</em> is a much larger, harder project — keep it as
+      a stated open problem, build the empirical/tool contribution instead.</p>
+  </section>
+
+  <!-- ===== reading path ===== -->
+  <section>
+    <h2>Reading path (intuition → rigor)</h2>
+    <ol class="muted tight">
+      <li><b>Mazur &amp; Stein, <i>Prime Numbers and the Riemann Hypothesis</i></b> (CUP 2016) — <b>start here.</b>
+        Builds the &ldquo;Riemann spectrum&rdquo; via Fourier analysis; Part I needs no calculus. Made for your background.</li>
+      <li><b>3Blue1Brown zeta video</b> — watch alongside Part I for the continuation visual.</li>
+      <li><b>Stein &amp; Shakarchi, <i>Complex Analysis</i></b> (Princeton II) — the MVP subset above; read selectively (&zeta;, functional equation, PNT chapters).</li>
+      <li><b>Edwards, <i>Riemann's Zeta Function</i></b> (Dover) — the deep dive; Riemann–Siegel, explicit formula, computations. Where you go for the truncation that fixes the arrow picture.</li>
+      <li><b>Apostol, <i>Analytic Number Theory</i></b> — rigorous reference for &Lambda;, Möbius, Dirichlet series. Look-up, not read-through.</li>
+      <li><b>Keith Conrad's &amp; Tao's expository notes</b> — targeted clarifications (the 1+2+3…=−1/12 trap done right).</li>
+      <li><i>Optional motivation:</i> Derbyshire, <i>Prime Obsession</i>; du Sautoy, <i>Music of the Primes</i> (metaphor — hold at arm's length).</li>
+    </ol>
+    <h3 style="margin-top:24px">Staged plan with benchmarks</h3>
+    <ul class="muted tight small">
+      <li><b>Weeks 1–3:</b> Mazur–Stein Part I + 3B1B; reproduce the first zeros and |Z(2&pi;x/ln2)| (done for you in the Explorer).
+        <i>Benchmark:</i> explain why zero heights are &ldquo;frequencies&rdquo; and why the Dirichlet series doesn't converge at &sigma;=½.</li>
+      <li><b>Weeks 4–8:</b> the complex-analysis MVP from Stein–Shakarchi; derive the explicit formula's residue structure.
+        <i>Benchmark:</i> reconstruct &psi;<sub>0</sub>(x) and say where each term comes from.</li>
+      <li><b>Weeks 6–10:</b> Xen Wiki zeta page + Battaglia derivation + Guillet 2026.
+        <i>Benchmark:</i> state precisely which parts are convergent-region identities vs. continuation heuristics.</li>
+      <li><b>Weeks 10+:</b> extend this explorer into an empirical study — does the &zeta; metric (and its &sigma;-variants) predict human/consonance-model rankings better than TE badness or harmonic entropy? That attacks 1.4(a) and is the publishable core.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Crank attractors to avoid</h2>
+    <ul class="muted tight small">
+      <li>&ldquo;Elementary&rdquo; proofs via the functional equation or a slick contradiction — arXiv is full of them.</li>
+      <li>Physics-flavored Hilbert–Pólya &ldquo;I found the operator&rdquo; claims (serious work exists; it does <em>not</em> prove RH).</li>
+      <li>Even eminent attempts fail publicly (Atiyah 2018; Stieltjes 1885). Short + extraordinary ⟹ almost always wrong.</li>
+      <li>The tuning material's own trap: don't leap from &ldquo;great numerical fit&rdquo; to &ldquo;&zeta; explains consonance.&rdquo;
+        The zeta rating collapses the multidimensional character of temperaments — no substitute for investigating each.</li>
+    </ul>
+  </section>
+
+  <hr class="sep">
+  <section>
+    <h3>Caveats on this tool's numerics</h3>
+    <ul class="faint tight small">
+      <li>&zeta;(&sigma;+it) is computed by Euler–Maclaurin (≈1e−7 across the plotted range); |Z| by the Riemann–Siegel main sum with the leading remainder. Accurate for exploration, not for research-grade zero-hunting.</li>
+      <li>Peak / octave-stretch readouts come from a local golden-section search near t = 2&pi;N/ln2.</li>
+      <li>Guillet 2026's full text was inaccessible at the time of writing; claims about it rest on the abstract and a preprint figure. Verify the DOI and specifics before building research on top.</li>
+    </ul>
+  </section>
+</div>
+
+<footer class="site">All load-bearing claims anchored to primary sources: Platt–Trudgian 2021 · Pratt et al. 2020 · Odlyzko–te Riele 1985 · von Koch 1901 / Schoenfeld 1976 · Hardy 1914 · Guillet 2026.</footer>
+</body>
+</html>
